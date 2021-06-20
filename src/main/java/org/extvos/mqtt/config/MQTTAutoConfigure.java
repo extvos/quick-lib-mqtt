@@ -1,7 +1,7 @@
 package org.extvos.mqtt.config;
 
 /**
- * @author shenmc
+ * @author Mingcai SHEN
  */
 public class MQTTAutoConfigure {
 }
