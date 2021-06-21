@@ -1,4 +1,4 @@
-package org.extvos.mqtt.config;
+package plus.extvos.mqtt.config;
 
 /**
  * @author Mingcai SHEN
