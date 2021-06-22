@@ -8,7 +8,7 @@
     <artifactId>quick-lib-mqtt</artifactId>
     <name>quick-lib-mqtt</name>
     <description>A mqtt lib</description>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
 
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>io.github.extvos</groupId>
             <artifactId>quick-lib-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
