@@ -18,6 +18,7 @@
         <springboot.version>2.4.4</springboot.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <paho.mqttv3.version>1.2.5</paho.mqttv3.version>
     </properties>
 
     <dependencies>
@@ -25,6 +26,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springboot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>${paho.mqttv3.version}</version>
         </dependency>
 
         <dependency>

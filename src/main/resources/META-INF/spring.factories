@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-plus.extvos.mqtt.config.MQTTAutoConfigure
+plus.extvos.mqtt.config.MqttAutoConfigure
