@@ -13,7 +13,7 @@ public interface MqttAsyncClientAdapter {
     /**
      * Create mqtt async client
      *
-     * @param clientId  client ID
+     * @param clientId   client ID
      * @param serverURIs serverURIs, String[]
      * @return IMqttAsyncClient
      * @throws MqttException when found mqtt exception

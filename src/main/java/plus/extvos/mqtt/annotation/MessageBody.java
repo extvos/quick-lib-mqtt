@@ -32,6 +32,7 @@ public @interface MessageBody {
 
     /**
      * if required is true and value is null, method does not execute.
+     *
      * @return boolean
      */
     boolean required() default false;

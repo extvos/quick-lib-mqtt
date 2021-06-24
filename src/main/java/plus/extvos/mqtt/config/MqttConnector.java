@@ -66,6 +66,7 @@ public class MqttConnector implements DisposableBean {
     // for reconnect
     private final ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(2);
     private MqttProperties properties;
+
     public void start(MqttAsyncClientAdapter clientAdapter, MqttProperties properties, MqttConnectOptionsAdapter adapter) {
         if (properties.getDisable() == null || !properties.getDisable()) {
             // sort subscribe by order.
@@ -103,8 +104,8 @@ public class MqttConnector implements DisposableBean {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     try {
                         log.info("Connect success. client_id is [{}], brokers is [{}]."
-                                , client.getClientId()
-                                , String.join(",", options.getServerURIs()));
+                            , client.getClientId()
+                            , String.join(",", options.getServerURIs()));
                         subscribe(client);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -115,9 +116,9 @@ public class MqttConnector implements DisposableBean {
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     try {
                         log.error("Connect failure. client_id is [{}], brokers is [{}]. retry after {} ms."
-                                , client.getClientId()
-                                , String.join(",", options.getServerURIs())
-                                , options.getMaxReconnectDelay());
+                            , client.getClientId()
+                            , String.join(",", options.getServerURIs())
+                            , options.getMaxReconnectDelay());
                         scheduled.schedule(new ReConnect(client, options), options.getMaxReconnectDelay(), TimeUnit.MILLISECONDS);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -214,15 +215,15 @@ public class MqttConnector implements DisposableBean {
                     continue;
                 }
                 String temp = pair.getTopic(sharedEnable)
-                        .replace('+', '\u0000')
-                        .replace("#", "\u0000/\u0000");
+                    .replace('+', '\u0000')
+                    .replace("#", "\u0000/\u0000");
                 if (MqttTopic.isMatched(topic.getTopic(sharedEnable), temp)) {
                     pairs[i] = topic;
                     continue;
                 }
                 temp = topic.getTopic(sharedEnable)
-                        .replace('+', '\u0000')
-                        .replace("#", "\u0000/\u0000");
+                    .replace('+', '\u0000')
+                    .replace("#", "\u0000/\u0000");
                 if (MqttTopic.isMatched(pair.getTopic(sharedEnable), temp)) {
                     break;
                 }

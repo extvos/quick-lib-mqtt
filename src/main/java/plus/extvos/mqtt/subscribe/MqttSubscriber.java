@@ -1,7 +1,6 @@
 package plus.extvos.mqtt.subscribe;
 
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttSubscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -50,8 +49,8 @@ public class MqttSubscriber {
         subscriber.signPayload = subscriber.parameters.stream().anyMatch(ParameterModel::isSign);
         HashMap<String, Class<?>> paramTypeMap = new HashMap<>();
         subscriber.parameters.stream()
-                .filter(model -> model.getName() != null)
-                .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
+            .filter(model -> model.getName() != null)
+            .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
         if (method.isAnnotationPresent(Order.class)) {
             Order order = method.getAnnotation(Order.class);
             subscriber.order = order.value();
@@ -126,10 +125,10 @@ public class MqttSubscriber {
 
     private Optional<TopicPair> matched(final String clientId, final String topic) {
         if (clientIds == null || clientIds.length == 0
-                || Arrays.binarySearch(clientIds, clientId) >= 0) {
+            || Arrays.binarySearch(clientIds, clientId) >= 0) {
             return topics.stream()
-                    .filter(pair -> pair.isMatched(topic))
-                    .findFirst();
+                .filter(pair -> pair.isMatched(topic))
+                .findFirst();
         }
         return Optional.empty();
     }
@@ -166,7 +165,7 @@ public class MqttSubscriber {
 
     private Object fromTopic(String value, Class<?> target) {
         if (MqttConversionService.getSharedInstance()
-                .canConvert(String.class, target)) {
+            .canConvert(String.class, target)) {
             return MqttConversionService.getSharedInstance().convert(value, target);
         } else {
             log.warn("Unsupported covert from {} to {}", String.class.getName(), target.getName());
@@ -204,7 +203,7 @@ public class MqttSubscriber {
         }
         MqttSubscriber that = (MqttSubscriber) o;
         return Objects.equals(bean, that.bean) &&
-                Objects.equals(method, that.method);
+            Objects.equals(method, that.method);
     }
 
     @Override

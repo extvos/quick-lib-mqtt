@@ -92,8 +92,8 @@ public class PayloadJacksonAutoConfiguration {
 
     public static class MqttDefaultJacksonModule extends SimpleModule {
         public static final Version VERSION = VersionUtil.parseVersion("1.1.0",
-                "io.github.extvos",
-                "quick-lib-mqtt");
+            "io.github.extvos",
+            "quick-lib-mqtt");
 
         private final static ZoneId ZONE_ID = ZoneId.of("GMT+8");
         private final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -6,8 +6,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 /**
  * Used to publish message
  *
@@ -141,9 +139,9 @@ public class MqttPublisher {
 //        }
     }
 
-    public void send(IMqttAsyncClient client, String topic, byte[] bytes,int qos, boolean retained,IMqttActionListener callback){
+    public void send(IMqttAsyncClient client, String topic, byte[] bytes, int qos, boolean retained, IMqttActionListener callback) {
         assert client != null;
-        assert topic!=null && !topic.isEmpty();
+        assert topic != null && !topic.isEmpty();
         if (bytes == null) {
             return;
         }
