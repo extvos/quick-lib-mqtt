@@ -1,0 +1,128 @@
+{
+  "groups": [
+    {
+      "name": "spring.mqtt",
+      "type": "plus.extvos.mqtt.properties.MqttProperties",
+      "sourceType": "plus.extvos.mqtt.properties.MqttProperties",
+      "description": "MQTT配置."
+    },
+    {
+      "name": "spring.mqtt.will",
+      "type": "plus.extvos.mqtt.properties.WillProperties",
+      "sourceType": "plus.extvos.mqtt.properties.MqttProperties",
+      "sourceMethod": "getWill()",
+      "description": "遗愿相关配置."
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.mqtt.disable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否禁用."
+    },
+    {
+      "name": "spring.mqtt.clients",
+      "type": "java.util.Map<java.lang.String, plus.extvos.mqtt.properties.ConnectionProperties>",
+      "sourceType": "plus.extvos.mqtt.properties.MqttProperties",
+      "description": "多客户端配置,key:客户端ID."
+    },
+    {
+      "name": "spring.mqtt.uri",
+      "type": "java.lang.String[]",
+      "defaultValue": "tcp://127.0.0.1:1883",
+      "description": "MQTT服务器地址, 可以配置多个."
+    },
+    {
+      "name": "spring.mqtt.client-id",
+      "type": "java.lang.String",
+      "description": "客户端ID."
+    },
+    {
+      "name": "spring.qtt.username",
+      "type": "java.lang.String",
+      "description": "用户名."
+    },
+    {
+      "name": "spring.mqtt.password",
+      "type": "java.lang.String",
+      "description": "密码."
+    },
+    {
+      "name": "spring.mqtt.default-publish-qos",
+      "type": "java.lang.Integer",
+      "description": "发布消息默认使用的QOS, 默认 0.",
+      "defaultValue": 0
+    },
+    {
+      "name": "spring.mqtt.automatic-reconnect",
+      "type": "java.lang.Boolean",
+      "description": "断开是否重新连接.",
+      "defaultValue": true
+    },
+    {
+      "name": "spring.mqtt.max-reconnect-delay",
+      "type": "java.lang.Integer",
+      "description": "最大重连等待时间(秒).",
+      "defaultValue": 60
+    },
+    {
+      "name": "spring.mqtt.keep-alive-interval",
+      "type": "java.lang.Integer",
+      "description": "KeepAlive 周期(秒).",
+      "defaultValue": 60
+    },
+    {
+      "name": "spring.mqtt.connection-timeout",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间(秒).",
+      "defaultValue": 30
+    },
+    {
+      "name": "spring.mqtt.executor-service-timeout",
+      "type": "java.lang.Integer",
+      "description": "发送超时时间(秒).",
+      "defaultValue": 10
+    },
+    {
+      "name": "spring.mqtt.clean-session",
+      "type": "java.lang.Boolean",
+      "description": "是否清除会话.",
+      "defaultValue": true
+    },
+    {
+      "name": "spring.mqtt.enable-shared-subscription",
+      "type": "java.lang.Boolean",
+      "description": "是否启用共享订阅,对于不同的Broker,共享订阅可能无效(EMQ已测可用).",
+      "defaultValue": true
+    },
+    {
+      "name": "spring.mqtt.will",
+      "type": "plus.extvos.mqtt.properties.WillProperties",
+      "sourceType": "plus.extvos.mqtt.properties.MqttProperties",
+      "description": "遗愿相关配置."
+    },
+    {
+      "name": "spring.mqtt.will.topic",
+      "type": "java.lang.String",
+      "description": "遗愿主题."
+    },
+    {
+      "name": "spring.mqtt.will.payload",
+      "type": "java.lang.String",
+      "description": "遗愿消息内容."
+    },
+    {
+      "name": "spring.mqtt.will.qos",
+      "type": "java.lang.Integer",
+      "description": "遗愿消息QOS.",
+      "defaultValue": 0
+    },
+    {
+      "name": "spring.mqtt.will.retained",
+      "type": "java.lang.Boolean",
+      "description": "遗愿消息是否保留.",
+      "defaultValue": false
+    }
+  ]
+}

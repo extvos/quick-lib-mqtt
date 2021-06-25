@@ -5,5 +5,5 @@ import org.springframework.core.convert.converter.Converter;
 /**
  * @author tocrhz
  */
-public interface BodySerialize extends Converter<Object, byte[]> {
+public interface PayloadSerialize extends Converter<Object, byte[]> {
 }

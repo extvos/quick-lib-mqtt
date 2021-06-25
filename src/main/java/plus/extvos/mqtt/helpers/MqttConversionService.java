@@ -1,4 +1,4 @@
-package plus.extvos.mqtt.config;
+package plus.extvos.mqtt.helpers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,8 @@ import org.springframework.core.convert.converter.ConverterRegistry;
 import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.convert.support.GenericConversionService;
-import plus.extvos.mqtt.convert.BodyDeserialize;
-import plus.extvos.mqtt.convert.BodySerialize;
+import plus.extvos.mqtt.convert.PayloadDeserialize;
+import plus.extvos.mqtt.convert.PayloadSerialize;
 
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashSet;
@@ -54,18 +54,18 @@ public class MqttConversionService extends GenericConversionService {
 
     public static void addBeans(ConverterRegistry registry, ListableBeanFactory beanFactory) {
         Set<Object> beans = new LinkedHashSet<>();
-        beans.addAll(beanFactory.getBeansOfType(BodyDeserialize.class).values());
-        beans.addAll(beanFactory.getBeansOfType(BodySerialize.class).values());
+        beans.addAll(beanFactory.getBeansOfType(PayloadDeserialize.class).values());
+        beans.addAll(beanFactory.getBeansOfType(PayloadSerialize.class).values());
         beans.addAll(beanFactory.getBeansOfType(ConverterFactory.class).values());
         beans.addAll(beanFactory.getBeansOfType(GenericConverter.class).values());
         beans.addAll(beanFactory.getBeansOfType(Converter.class).values());
         for (Object bean : beans) {
-            if (bean instanceof BodyDeserialize) {
-                registry.addConverterFactory((BodyDeserialize) bean);
+            if (bean instanceof PayloadDeserialize) {
+                registry.addConverterFactory((PayloadDeserialize) bean);
             } else if (bean instanceof ConverterFactory) {
                 registry.addConverterFactory((ConverterFactory<?, ?>) bean);
-            } else if (bean instanceof BodySerialize) {
-                registry.addConverter((BodySerialize) bean);
+            } else if (bean instanceof PayloadSerialize) {
+                registry.addConverter((PayloadSerialize) bean);
             } else if (bean instanceof GenericConverter) {
                 registry.addConverter((GenericConverter) bean);
             } else if (bean instanceof Converter) {

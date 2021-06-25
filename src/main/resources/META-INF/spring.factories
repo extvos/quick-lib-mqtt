@@ -1,2 +1,5 @@
+# Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+plus.extvos.mqtt.helpers.MqttSubscribeProcessor,\
+plus.extvos.mqtt.config.PayloadJacksonAutoConfigure,\
 plus.extvos.mqtt.config.MqttAutoConfigure

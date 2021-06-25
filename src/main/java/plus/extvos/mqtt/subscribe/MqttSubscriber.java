@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import plus.extvos.mqtt.annotation.TopicSubscribe;
-import plus.extvos.mqtt.config.MqttConversionService;
+import plus.extvos.mqtt.helpers.MqttConversionService;
 
 import java.lang.reflect.Method;
 import java.util.*;
