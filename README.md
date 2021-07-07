@@ -73,3 +73,7 @@ public class TestTask {
 	MqttPublisher mqttPublisher = new MqttPublisher;
 	mqttPublisher.send("Test/a/b/c",byte[]{0,1,2,3,4,5,6,7,8,9});
 ```
+
+## 注意
+
+使用本模块跟`spring-integration-mqtt`有版本冲突，所以在使用本模块时建议不要使用`spring-integration-mqtt`。
