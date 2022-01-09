@@ -43,42 +43,42 @@ public class ConnectionProperties {
      *
      * @see MqttConnectOptions#setMaxReconnectDelay(int)
      */
-    private Integer maxReconnectDelay;
+    private Integer maxReconnectDelay = 5;
 
     /**
      * KeepAlive 周期(秒).
      *
      * @see MqttConnectOptions#setKeepAliveInterval(int)
      */
-    private Integer keepAliveInterval;
+    private Integer keepAliveInterval = 5;
 
     /**
      * 连接超时时间(秒).
      *
      * @see MqttConnectOptions#setConnectionTimeout(int)
      */
-    private Integer connectionTimeout;
+    private Integer connectionTimeout = 5;
 
     /**
      * 发送超时时间(秒).
      *
      * @see MqttConnectOptions#setExecutorServiceTimeout(int)
      */
-    private Integer executorServiceTimeout;
+    private Integer executorServiceTimeout = 5;
 
     /**
      * 是否清除会话.
      *
      * @see MqttConnectOptions#setCleanSession(boolean)
      */
-    private Boolean cleanSession;
+    private Boolean cleanSession = false;
 
     /**
      * 断开是否重新连接.
      *
      * @see MqttConnectOptions#setAutomaticReconnect(boolean)
      */
-    private Boolean automaticReconnect;
+    private Boolean automaticReconnect = false;
 
     /**
      * 遗愿相关配置.

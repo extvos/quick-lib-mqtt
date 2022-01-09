@@ -1,4 +1,4 @@
-package plus.extvos.mqtt.config;
+package plus.extvos.mqtt.helpers;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.slf4j.Logger;
@@ -108,7 +108,8 @@ public class MqttConnector implements DisposableBean {
                             , String.join(",", options.getServerURIs()));
                         subscribe(client);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        log.error(">>", e);
+//                        e.printStackTrace();
                     }
                 }
 
@@ -121,7 +122,8 @@ public class MqttConnector implements DisposableBean {
                             , options.getMaxReconnectDelay());
                         scheduled.schedule(new ReConnect(client, options), options.getMaxReconnectDelay(), TimeUnit.MILLISECONDS);
                     } catch (Exception e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
+                        log.error(">>", e);
                     }
                 }
             });
@@ -157,7 +159,8 @@ public class MqttConnector implements DisposableBean {
                 }
             });
         } catch (MqttException e) {
-            e.printStackTrace();
+            log.error(">>", e);
+
         }
     }
 

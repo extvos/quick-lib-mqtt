@@ -1,4 +1,4 @@
-package plus.extvos.mqtt.config;
+package plus.extvos.mqtt.helpers;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;

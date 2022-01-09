@@ -1,4 +1,4 @@
-package plus.extvos.mqtt.config;
+package plus.extvos.mqtt.helpers;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 

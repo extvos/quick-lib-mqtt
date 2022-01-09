@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import plus.extvos.mqtt.annotation.TopicSubscribe;
-import plus.extvos.mqtt.config.MqttConversionService;
+import plus.extvos.mqtt.helpers.MqttConversionService;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -76,48 +76,48 @@ public class MqttSubscriber {
     }
 
     private int[] fillQos(String[] topics, int[] qos) {
-        int topic_len = topics.length;
-        int qos_len = qos.length;
-        if (topic_len > qos_len) {
-            int[] temp = new int[topic_len];
-            System.arraycopy(qos, 0, temp, 0, qos_len);
-            Arrays.fill(temp, qos_len, topic_len, qos[qos_len - 1]);
+        int topicLen = topics.length;
+        int qosLen = qos.length;
+        if (topicLen > qosLen) {
+            int[] temp = new int[topicLen];
+            System.arraycopy(qos, 0, temp, 0, qosLen);
+            Arrays.fill(temp, qosLen, topicLen, qos[qosLen - 1]);
             return temp;
-        } else if (qos_len > topic_len) {
-            int[] temp = new int[topic_len];
-            System.arraycopy(qos, 0, temp, 0, topic_len);
+        } else if (qosLen > topicLen) {
+            int[] temp = new int[topicLen];
+            System.arraycopy(qos, 0, temp, 0, topicLen);
             return temp;
         }
         return qos;
     }
 
     private boolean[] fillShared(String[] topics, boolean[] shared) {
-        int topic_len = topics.length;
-        int qos_len = shared.length;
-        if (topic_len > qos_len) {
-            boolean[] temp = new boolean[topic_len];
-            System.arraycopy(shared, 0, temp, 0, qos_len);
-            Arrays.fill(temp, qos_len, topic_len, shared[qos_len - 1]);
+        int topicLen = topics.length;
+        int qosLen = shared.length;
+        if (topicLen > qosLen) {
+            boolean[] temp = new boolean[topicLen];
+            System.arraycopy(shared, 0, temp, 0, qosLen);
+            Arrays.fill(temp, qosLen, topicLen, shared[qosLen - 1]);
             return temp;
-        } else if (qos_len > topic_len) {
-            boolean[] temp = new boolean[topic_len];
-            System.arraycopy(shared, 0, temp, 0, topic_len);
+        } else if (qosLen > topicLen) {
+            boolean[] temp = new boolean[topicLen];
+            System.arraycopy(shared, 0, temp, 0, topicLen);
             return temp;
         }
         return shared;
     }
 
     private String[] fillGroups(String[] topics, String[] groups) {
-        int topic_len = topics.length;
-        int qos_len = groups.length;
-        if (topic_len > qos_len) {
-            String[] temp = new String[topic_len];
-            System.arraycopy(groups, 0, temp, 0, qos_len);
-            Arrays.fill(temp, qos_len, topic_len, groups[qos_len - 1]);
+        int topicLen = topics.length;
+        int qosLen = groups.length;
+        if (topicLen > qosLen) {
+            String[] temp = new String[topicLen];
+            System.arraycopy(groups, 0, temp, 0, qosLen);
+            Arrays.fill(temp, qosLen, topicLen, groups[qosLen - 1]);
             return temp;
-        } else if (qos_len > topic_len) {
-            String[] temp = new String[topic_len];
-            System.arraycopy(groups, 0, temp, 0, topic_len);
+        } else if (qosLen > topicLen) {
+            String[] temp = new String[topicLen];
+            System.arraycopy(groups, 0, temp, 0, topicLen);
             return temp;
         }
         return groups;

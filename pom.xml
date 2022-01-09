@@ -15,7 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springboot.version>2.4.4</springboot.version>
+        <springboot.version>2.5.8</springboot.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <paho.mqttv3.version>1.2.5</paho.mqttv3.version>
@@ -26,8 +26,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springboot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${springboot.version}</version>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
@@ -47,8 +58,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.4</version>
+                <version>${springboot.version}</version>
             </plugin>
+
         </plugins>
     </build>
 
@@ -61,5 +73,34 @@
         </repository>
     </distributionManagement>
 
+
+    <licenses>
+        <license>
+            <name>GNU GPL v3</name>
+            <url>https://www.gnu.org/licenses/gpl.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Mingcai SHEN</name>
+            <email>archsh@gmail.com</email>
+            <organization>Shenzhen Cygnux Technologies Ltd.</organization>
+            <organizationUrl>https://www.cygnux.cn</organizationUrl>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>Shenzhen Cygnux Technologies Ltd.</name>
+        <url>https://www.cygnux.cn</url>
+    </organization>
+
+    <scm>
+        <url>https://github.com/extvos/quick-lib-mqtt.git</url>
+        <connection>scm:git:git://github.com/extvos/quick-lib-mqtt.git</connection>
+        <developerConnection>scm:git:git@github.com:extvos/quick-lib-mqtt.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
 </project>

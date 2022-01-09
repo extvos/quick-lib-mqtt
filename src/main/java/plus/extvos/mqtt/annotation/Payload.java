@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
-public @interface MessageBody {
+public @interface Payload {
 
     /**
      * The processing before conversion is executed sequentially, starting from byte[] and ending with the target type.
@@ -36,4 +36,11 @@ public @interface MessageBody {
      * @return boolean
      */
     boolean required() default false;
+
+    /**
+     * Specify the format of payload if target variable type is not byte[],
+     * we supports: json, xml, yaml, maybe bson later.
+     * @return format string.
+     */
+    String format() default "json";
 }

@@ -18,8 +18,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.StringUtils;
-import plus.extvos.mqtt.convert.BodyDeserialize;
-import plus.extvos.mqtt.convert.BodySerialize;
+import plus.extvos.mqtt.convert.PayloadDeserialize;
+import plus.extvos.mqtt.convert.PayloadSerialize;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -39,8 +39,8 @@ import java.util.Date;
 @AutoConfigureAfter({JacksonAutoConfiguration.class})
 @ConditionalOnClass(ObjectMapper.class)
 @Configuration
-public class PayloadJacksonAutoConfiguration {
-    private final static Logger log = LoggerFactory.getLogger(PayloadJacksonAutoConfiguration.class);
+public class PayloadJacksonAutoConfigure {
+    private final static Logger log = LoggerFactory.getLogger(PayloadJacksonAutoConfigure.class);
 
     @Bean
     @Order(1001)
@@ -55,8 +55,8 @@ public class PayloadJacksonAutoConfiguration {
 
     @Bean
     @Order(1002)
-    @ConditionalOnMissingBean(BodySerialize.class)
-    public BodySerialize payloadSerialize(ObjectMapper objectMapper) {
+    @ConditionalOnMissingBean(PayloadSerialize.class)
+    public PayloadSerialize payloadSerialize(ObjectMapper objectMapper) {
         return source -> {
             try {
                 return objectMapper.writeValueAsBytes(source);
@@ -69,9 +69,9 @@ public class PayloadJacksonAutoConfiguration {
 
     @Bean
     @Order(1002)
-    @ConditionalOnMissingBean(BodyDeserialize.class)
-    public BodyDeserialize payloadDeserialize(ObjectMapper objectMapper) {
-        return new BodyDeserialize() {
+    @ConditionalOnMissingBean(PayloadDeserialize.class)
+    public PayloadDeserialize payloadDeserialize(ObjectMapper objectMapper) {
+        return new PayloadDeserialize() {
             @Override
             @SuppressWarnings("unchecked")
             public <T> Converter<byte[], T> getConverter(Class<T> targetType) {

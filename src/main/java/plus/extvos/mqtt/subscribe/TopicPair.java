@@ -114,8 +114,12 @@ public class TopicPair {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TopicPair topicPair = (TopicPair) o;
         return Objects.equals(topic, topicPair.topic);
     }

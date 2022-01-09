@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
-import plus.extvos.mqtt.annotation.MessageBody;
+import plus.extvos.mqtt.annotation.Payload;
 import plus.extvos.mqtt.annotation.TopicVariable;
 
 import java.lang.annotation.Annotation;
@@ -44,8 +44,8 @@ final class ParameterModel {
                         model.required = model.required || namedValue.required();
                         model.name = namedValue.value();
                     }
-                    if (annotation.annotationType() == MessageBody.class) {
-                        MessageBody payload = (MessageBody) annotation;
+                    if (annotation.annotationType() == Payload.class) {
+                        Payload payload = (Payload) annotation;
                         model.sign = true;
                         model.required = model.required || payload.required();
                         model.converters = toConverters(payload.value());

@@ -5,6 +5,11 @@ import org.eclipse.paho.client.mqttv3.IMqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
+import plus.extvos.mqtt.helpers.MqttConnector;
+import plus.extvos.mqtt.helpers.MqttConversionService;
+
+import java.util.Objects;
 
 /**
  * Used to publish message
@@ -23,7 +28,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String topic, Object payload) {
-//        send(MqttConnector.DefaultClientId, topic, payload, MqttConnector.DefaultPublishQos, false, null);
+        send(MqttConnector.DefaultClientId, topic, payload, MqttConnector.DefaultPublishQos, false, null);
     }
 
     /**
@@ -36,7 +41,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String topic, Object payload, IMqttActionListener callback) {
-//        send(MqttConnector.DefaultClientId, topic, payload, MqttConnector.DefaultPublishQos, false, callback);
+        send(MqttConnector.DefaultClientId, topic, payload, MqttConnector.DefaultPublishQos, false, callback);
     }
 
     /**
@@ -49,7 +54,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String clientId, String topic, Object payload) {
-//        send(clientId, topic, payload, MqttConnector.getDefaultQosById(clientId), false, null);
+        send(clientId, topic, payload, MqttConnector.getDefaultQosById(clientId), false, null);
     }
 
     /**
@@ -63,7 +68,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String clientId, String topic, Object payload, IMqttActionListener callback) {
-//        send(clientId, topic, payload, MqttConnector.getDefaultQosById(clientId), false, callback);
+        send(clientId, topic, payload, MqttConnector.getDefaultQosById(clientId), false, callback);
     }
 
 
@@ -78,7 +83,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String topic, Object payload, int qos, boolean retained) {
-//        send(MqttConnector.DefaultClientId, topic, payload, qos, retained, null);
+        send(MqttConnector.DefaultClientId, topic, payload, qos, retained, null);
     }
 
     /**
@@ -108,7 +113,7 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String topic, Object payload, int qos, boolean retained, IMqttActionListener callback) {
-//        send(MqttConnector.DefaultClientId, topic, payload, qos, retained, callback);
+        send(MqttConnector.DefaultClientId, topic, payload, qos, retained, callback);
     }
 
 
@@ -125,18 +130,13 @@ public class MqttPublisher {
      * @throws NullPointerException     if client not exists
      */
     public void send(String clientId, String topic, Object payload, int qos, boolean retained, IMqttActionListener callback) {
-//        Assert.isTrue(topic != null && !topic.trim().isEmpty(), "topic cannot be blank.");
-//        IMqttAsyncClient client = Objects.requireNonNull(MqttConnector.getClientById(clientId));
-//        byte[] bytes = MqttConversionService.getSharedInstance().toBytes(payload);
-//        if (bytes == null) {
-//            return;
-//        }
-//        MqttMessage message = toMessage(bytes, qos, retained);
-//        try {
-//            client.publish(topic, message, null, callback);
-//        } catch (Throwable throwable) {
-//            log.error("message publish error: {}", throwable.getMessage(), throwable);
-//        }
+        Assert.isTrue(topic != null && !topic.trim().isEmpty(), "topic cannot be blank.");
+        IMqttAsyncClient client = Objects.requireNonNull(MqttConnector.getClientById(clientId));
+        byte[] bytes = MqttConversionService.getSharedInstance().toBytes(payload);
+        if (bytes == null) {
+            return;
+        }
+        send(client,topic,bytes,qos,retained,callback);
     }
 
     public void send(IMqttAsyncClient client, String topic, byte[] bytes, int qos, boolean retained, IMqttActionListener callback) {
