@@ -9,7 +9,7 @@
     <name>quick-lib-mqtt</name>
     <description>A mqtt lib</description>
     <url>https://github.com/extvos/quickstart</url>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>io.github.extvos</groupId>
             <artifactId>quick-lib-common</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
