@@ -23,7 +23,7 @@ public class MqttSubscribeProcessor implements BeanPostProcessor {
     // subscriber cache
     public static final LinkedList<MqttSubscriber> SUBSCRIBERS = new LinkedList<>();
 
-    @Value("${mqtt.disable:false}")
+    @Value("${spring.mqtt.disable:false}")
     private Boolean disable;
 
     @Override
