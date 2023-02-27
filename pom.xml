@@ -9,14 +9,14 @@
     <name>quick-lib-mqtt</name>
     <description>A mqtt lib</description>
     <url>https://github.com/extvos/quickstart</url>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springboot.version>2.5.8</springboot.version>
+        <springboot.version>2.5.14</springboot.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <paho.mqttv3.version>1.2.5</paho.mqttv3.version>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>io.github.extvos</groupId>
             <artifactId>quick-lib-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
