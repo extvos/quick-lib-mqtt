@@ -49,8 +49,8 @@ public class MqttSubscriber {
         subscriber.signPayload = subscriber.parameters.stream().anyMatch(ParameterModel::isSign);
         HashMap<String, Class<?>> paramTypeMap = new HashMap<>();
         subscriber.parameters.stream()
-            .filter(model -> model.getName() != null)
-            .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
+                .filter(model -> model.getName() != null)
+                .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
         if (method.isAnnotationPresent(Order.class)) {
             Order order = method.getAnnotation(Order.class);
             subscriber.order = order.value();
@@ -61,17 +61,85 @@ public class MqttSubscriber {
         return subscriber;
     }
 
+    public static MqttSubscriber of(Object bean, Method method, String... topics) {
+        if (topics.length < 1) {
+            return null;
+        }
+        MqttSubscriber subscriber = new MqttSubscriber();
+        subscriber.bean = bean;
+        subscriber.method = method;
+        subscriber.parameters = ParameterModel.of(method);
+        subscriber.signPayload = subscriber.parameters.stream().anyMatch(ParameterModel::isSign);
+        HashMap<String, Class<?>> paramTypeMap = new HashMap<>();
+        subscriber.parameters.stream()
+                .filter(model -> model.getName() != null)
+                .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
+        if (method.isAnnotationPresent(Order.class)) {
+            Order order = method.getAnnotation(Order.class);
+            subscriber.order = order.value();
+        }
+        subscriber.setTopics(topics, new int[0], new boolean[0], new String[0], paramTypeMap);
+        return subscriber;
+    }
+
+    public static MqttSubscriber of(Object bean, Method method, String[] topics, int[] qos, boolean[] shared, String[] groups) {
+        MqttSubscriber subscriber = new MqttSubscriber();
+        subscriber.bean = bean;
+        subscriber.method = method;
+        subscriber.parameters = ParameterModel.of(method);
+        subscriber.signPayload = subscriber.parameters.stream().anyMatch(ParameterModel::isSign);
+        HashMap<String, Class<?>> paramTypeMap = new HashMap<>();
+        subscriber.parameters.stream()
+                .filter(model -> model.getName() != null)
+                .forEach(model -> paramTypeMap.put(model.getName(), model.getType()));
+        if (method.isAnnotationPresent(Order.class)) {
+            Order order = method.getAnnotation(Order.class);
+            subscriber.order = order.value();
+        }
+        subscriber.setTopics(topics, qos, shared, groups, paramTypeMap);
+        return subscriber;
+    }
+
 
     private void setTopics(TopicSubscribe subscribe, HashMap<String, Class<?>> paramTypeMap) {
-        String[] topics = subscribe.value();
-        int[] qos = fillQos(topics, subscribe.qos());
-        boolean[] shared = fillShared(topics, subscribe.shared());
-        String[] groups = fillGroups(topics, subscribe.groups());
+        setTopics(subscribe.value(), subscribe.qos(), subscribe.shared(), subscribe.groups(), paramTypeMap);
+//        String[] topics = subscribe.value();
+//        int[] qos = fillQos(topics, subscribe.qos());
+//        boolean[] shared = fillShared(topics, subscribe.shared());
+//        String[] groups = fillGroups(topics, subscribe.groups());
+//
+//        LinkedHashSet<TopicPair> temps = new LinkedHashSet<>();
+//        for (int i = 0; i < topics.length; i++) {
+//            temps.add(TopicPair.of(topics[i], qos[i], shared[i], groups[i], paramTypeMap));
+//        }
+//        this.topics.addAll(temps);
+//        this.topics.sort(Comparator.comparingInt(TopicPair::order));
+    }
+
+    private void setTopics(String[] topics, int[] qos, boolean[] shared, String[] groups, HashMap<String, Class<?>> paramTypeMap) {
+        int[] qqos = fillQos(topics, qos);
+        boolean[] sshared = fillShared(topics, shared);
+        String[] ggroups = fillGroups(topics, groups);
         LinkedHashSet<TopicPair> temps = new LinkedHashSet<>();
         for (int i = 0; i < topics.length; i++) {
-            temps.add(TopicPair.of(topics[i], qos[i], shared[i], groups[i], paramTypeMap));
+            temps.add(TopicPair.of(topics[i], qqos[i], sshared[i], ggroups[i], paramTypeMap));
         }
         this.topics.addAll(temps);
+        this.topics.sort(Comparator.comparingInt(TopicPair::order));
+    }
+
+    private void setTopics(String topics, int qos, boolean shared, String groups, HashMap<String, Class<?>> paramTypeMap) {
+        this.topics.add(TopicPair.of(topics, qos, shared, groups, paramTypeMap));
+        this.topics.sort(Comparator.comparingInt(TopicPair::order));
+    }
+
+    private void setTopics(String topics, int qos, HashMap<String, Class<?>> paramTypeMap) {
+        this.topics.add(TopicPair.of(topics, qos, false, null, paramTypeMap));
+        this.topics.sort(Comparator.comparingInt(TopicPair::order));
+    }
+
+    private void setTopics(String topics, HashMap<String, Class<?>> paramTypeMap) {
+        this.topics.add(TopicPair.of(topics, 0, false, null, paramTypeMap));
         this.topics.sort(Comparator.comparingInt(TopicPair::order));
     }
 
@@ -81,7 +149,7 @@ public class MqttSubscriber {
         if (topicLen > qosLen) {
             int[] temp = new int[topicLen];
             System.arraycopy(qos, 0, temp, 0, qosLen);
-            Arrays.fill(temp, qosLen, topicLen, qos[qosLen - 1]);
+            Arrays.fill(temp, qosLen, topicLen, qosLen < 1 ? 0 : qos[qosLen - 1]);
             return temp;
         } else if (qosLen > topicLen) {
             int[] temp = new int[topicLen];
@@ -97,7 +165,7 @@ public class MqttSubscriber {
         if (topicLen > qosLen) {
             boolean[] temp = new boolean[topicLen];
             System.arraycopy(shared, 0, temp, 0, qosLen);
-            Arrays.fill(temp, qosLen, topicLen, shared[qosLen - 1]);
+            Arrays.fill(temp, qosLen, topicLen, qosLen >= 1 && shared[qosLen - 1]);
             return temp;
         } else if (qosLen > topicLen) {
             boolean[] temp = new boolean[topicLen];
@@ -113,7 +181,7 @@ public class MqttSubscriber {
         if (topicLen > qosLen) {
             String[] temp = new String[topicLen];
             System.arraycopy(groups, 0, temp, 0, qosLen);
-            Arrays.fill(temp, qosLen, topicLen, groups[qosLen - 1]);
+            Arrays.fill(temp, qosLen, topicLen, qosLen < 1 ? "" : groups[qosLen - 1]);
             return temp;
         } else if (qosLen > topicLen) {
             String[] temp = new String[topicLen];
@@ -125,10 +193,10 @@ public class MqttSubscriber {
 
     private Optional<TopicPair> matched(final String clientId, final String topic) {
         if (clientIds == null || clientIds.length == 0
-            || Arrays.binarySearch(clientIds, clientId) >= 0) {
+                || Arrays.binarySearch(clientIds, clientId) >= 0) {
             return topics.stream()
-                .filter(pair -> pair.isMatched(topic))
-                .findFirst();
+                    .filter(pair -> pair.isMatched(topic))
+                    .findFirst();
         }
         return Optional.empty();
     }
@@ -165,7 +233,7 @@ public class MqttSubscriber {
 
     private Object fromTopic(String value, Class<?> target) {
         if (MqttConversionService.getSharedInstance()
-            .canConvert(String.class, target)) {
+                .canConvert(String.class, target)) {
             return MqttConversionService.getSharedInstance().convert(value, target);
         } else {
             log.warn("Unsupported covert from {} to {}", String.class.getName(), target.getName());
@@ -203,7 +271,7 @@ public class MqttSubscriber {
         }
         MqttSubscriber that = (MqttSubscriber) o;
         return Objects.equals(bean, that.bean) &&
-            Objects.equals(method, that.method);
+                Objects.equals(method, that.method);
     }
 
     @Override
